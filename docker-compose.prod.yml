@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  web:
+    platform: linux/amd64
+    restart: unless-stopped
+    build:
+      context: ./web
+      dockerfile: Dockerfile.prod
+    volumes:
+      - ./web/:/web
+      - /web/node_modules
+      - /web/.next
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+      - apix
+  nginx:
+    image: nginx:1.23-alpine
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - web
