@@ -13,9 +13,6 @@ services:
       - /web/.next
     ports:
       - "3000:3000"
-    depends_on:
-      - api
-      - apix
   nginx:
     image: nginx:1.23-alpine
     build:
